@@ -10,8 +10,40 @@ const errorMessage =
 const sunInfo =
     document.getElementById("sunInfo");
 
-const hoursContainer =
-    document.getElementById("hoursContainer");
+const dayHoursContainer =
+    document.getElementById(
+        "dayHoursContainer"
+    );
+
+const nightHoursContainer =
+    document.getElementById(
+        "nightHoursContainer"
+    );
+
+const currentHour =
+    document.getElementById(
+        "currentHour"
+    );
+
+
+// ========================================
+// 取得台灣今天日期
+// ========================================
+
+function getTaiwanDate() {
+
+    return new Intl.DateTimeFormat(
+        "en-CA",
+        {
+            timeZone: "Asia/Taipei",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        }
+    ).format(
+        new Date()
+    );
+}
 
 
 // ========================================
@@ -19,11 +51,10 @@ const hoursContainer =
 // ========================================
 
 const today =
-    new Date()
-        .toISOString()
-        .split("T")[0];
+    getTaiwanDate();
 
-dateInput.value = today;
+dateInput.value =
+    today;
 
 
 // ========================================
@@ -54,7 +85,7 @@ async function calculatePlanetaryHours() {
 
 
     // -------------------------------
-    // 基本驗證
+    // 日期驗證
     // -------------------------------
 
     if (!date) {
@@ -131,10 +162,6 @@ async function calculatePlanetaryHours() {
 
 function displayResult(data) {
 
-    // -------------------------------
-    // 基本資訊
-    // -------------------------------
-
     document.getElementById(
         "resultDate"
     ).textContent =
@@ -163,56 +190,202 @@ function displayResult(data) {
         "grid";
 
 
-    // -------------------------------
-    // 清除舊資料
-    // -------------------------------
-
-    hoursContainer.innerHTML =
+    dayHoursContainer.innerHTML =
         "";
 
+    nightHoursContainer.innerHTML =
+        "";
 
-    // -------------------------------
-    // 建立 24 個 Planetary Hours
-    // -------------------------------
 
     data.hours.forEach(
         hour => {
 
             const card =
-                document.createElement(
-                    "div"
+                createHourCard(hour);
+
+            if (hour.type === "DAY") {
+
+                dayHoursContainer.appendChild(
+                    card
                 );
 
-            card.className =
-                "hour-card";
+            } else {
 
-
-            card.innerHTML = `
-                <div class="hour-number">
-                    Hour ${hour.hour}
-                </div>
-
-                <div class="hour-type">
-                    ${hour.type}
-                </div>
-
-                <div class="planet">
-                    ${hour.planet}
-                </div>
-
-                <div class="time">
-                    ${hour.start}
-                    -
-                    ${hour.end}
-                </div>
-            `;
-
-
-            hoursContainer.appendChild(
-                card
-            );
+                nightHoursContainer.appendChild(
+                    card
+                );
+            }
         }
     );
+
+
+    findCurrentHour(data);
+}
+
+
+// ========================================
+// 建立 Hour Card
+// ========================================
+
+function createHourCard(hour) {
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+    card.className =
+        "hour-card";
+
+    card.dataset.hour =
+        hour.hour;
+
+    card.innerHTML = `
+        <div class="hour-number">
+            Hour ${hour.hour}
+        </div>
+
+        <div class="hour-type">
+            ${hour.type}
+        </div>
+
+        <div class="planet">
+            ${hour.planet}
+        </div>
+
+        <div class="time">
+            ${formatTime(hour.start)}
+            -
+            ${formatTime(hour.end)}
+        </div>
+    `;
+
+    return card;
+}
+
+
+// ========================================
+// 時間格式化
+// ========================================
+
+function formatTime(time) {
+
+    return time.substring(
+        0,
+        5
+    );
+}
+
+
+// ========================================
+// 找出目前 Planetary Hour
+// ========================================
+
+function findCurrentHour(data) {
+
+    const today =
+        getTaiwanDate();
+
+
+    // 只有查詢今天才顯示
+    if (data.date !== today) {
+
+        currentHour.textContent =
+            "";
+
+        return;
+    }
+
+
+    const now =
+        new Date();
+
+
+    const currentTime =
+        new Intl.DateTimeFormat(
+            "en-GB",
+            {
+                timeZone: "Asia/Taipei",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false
+            }
+        ).format(now);
+
+
+    const hour =
+        data.hours.find(
+            item =>
+                isTimeInRange(
+                    currentTime,
+                    item.start,
+                    item.end
+                )
+        );
+
+
+    if (!hour) {
+
+        currentHour.textContent =
+            "";
+
+        return;
+    }
+
+
+    currentHour.innerHTML = `
+        Current Planetary Hour:
+        <strong>
+            Hour ${hour.hour}
+            -
+            ${hour.planet}
+        </strong>
+    `;
+
+
+    highlightCurrentHour(
+        hour.hour
+    );
+}
+
+
+// ========================================
+// 判斷時間是否在區間
+// ========================================
+
+function isTimeInRange(
+    current,
+    start,
+    end
+) {
+
+    return (
+        current >= start &&
+        current < end
+    );
+}
+
+
+// ========================================
+// Highlight 目前 Hour
+// ========================================
+
+function highlightCurrentHour(
+    hourNumber
+) {
+
+    const card =
+        document.querySelector(
+            `[data-hour="${hourNumber}"]`
+        );
+
+    if (card) {
+
+        card.classList.add(
+            "current"
+        );
+    }
 }
 
 
