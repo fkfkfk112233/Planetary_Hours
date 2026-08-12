@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Planetary_hours.calculator.PlanetaryHourCalculator;
 import com.example.Planetary_hours.dto.PlanetaryHourResponse;
+import com.example.Planetary_hours.dto.PlanetaryHoursResponse;
 import com.example.Planetary_hours.dto.SunData;
 import com.example.Planetary_hours.model.Location;
 
@@ -25,11 +26,11 @@ public class PlanetaryHourService {
         this.sunDataProvider = sunDataProvider;
     }
 
-    public List<PlanetaryHourResponse> calculate(
+    public PlanetaryHoursResponse calculate(
             LocalDate date,
             Location location) {
 
-        // 取得今天的日出、日落
+        // 取得指定地點當天的日出、日落
         SunData sunData =
                 sunDataProvider.getSunData(
                         date,
@@ -51,11 +52,22 @@ public class PlanetaryHourService {
                         )
                         .getSunrise();
 
-        return calculator.calculate(
+        // 計算 24 個 Planetary Hours
+        List<PlanetaryHourResponse> hours =
+                calculator.calculate(
+                        date,
+                        sunrise,
+                        sunset,
+                        nextSunrise
+                );
+
+        // 組合完整 Response
+        return new PlanetaryHoursResponse(
                 date,
+                location.name(),
                 sunrise,
                 sunset,
-                nextSunrise
+                hours
         );
     }
 }
