@@ -13,20 +13,20 @@ import com.example.Planetary_hours.dto.SunData;
 public class PlanetaryHourService {
 
     private final PlanetaryHourCalculator calculator;
-    private final SunDataService sunDataService;
+    private final SunDataProvider sunDataProvider;
 
     public PlanetaryHourService(
             PlanetaryHourCalculator calculator,
-            SunDataService sunDataService) {
+            SunDataProvider sunDataProvider) {
 
         this.calculator = calculator;
-        this.sunDataService = sunDataService;
+        this.sunDataProvider = sunDataProvider;
     }
 
     public List<String> calculate(LocalDate date) {
 
         SunData sunData =
-                sunDataService.getSunData(date);
+        		sunDataProvider.getSunData(date);
 
         LocalTime sunrise =
                 sunData.getSunrise();
@@ -35,7 +35,7 @@ public class PlanetaryHourService {
                 sunData.getSunset();
 
         LocalTime nextSunrise =
-                sunDataService
+        		sunDataProvider
                         .getSunData(date.plusDays(1))
                         .getSunrise();
 
