@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import com.example.Planetary_hours.dto.SunData;
 
 @Service
-public class SunDataService {
+public class SunDataService implements SunDataProvider{
 
+	@Override
     public SunData getSunData(LocalDate date) {
 
         // 暫時使用測試資料
