@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Planetary_hours.dto.PlanetaryHourResponse;
+import com.example.Planetary_hours.dto.PlanetaryHoursResponse;
 import com.example.Planetary_hours.model.Location;
 import com.example.Planetary_hours.service.PlanetaryHourService;
 
@@ -23,7 +24,7 @@ public class PlanetaryHourController {
     }
 
     @GetMapping("/api/planetary-hours")
-    public List<PlanetaryHourResponse> calculate(
+    public PlanetaryHoursResponse calculate(
             @RequestParam LocalDate date,
             @RequestParam Location location) {
 
