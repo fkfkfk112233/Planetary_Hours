@@ -6,12 +6,13 @@ import java.time.LocalTime;
 import org.springframework.stereotype.Service;
 
 import com.example.Planetary_hours.dto.SunData;
+import com.example.Planetary_hours.model.Location;
 
 @Service
 public class SunDataService implements SunDataProvider{
 
 	@Override
-    public SunData getSunData(LocalDate date) {
+    public SunData getSunData(LocalDate date, Location location) {
 
         // 暫時使用測試資料
         LocalTime sunrise = LocalTime.of(5, 30);
