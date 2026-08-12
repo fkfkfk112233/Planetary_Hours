@@ -154,3 +154,59 @@ button {
 .time {
     font-size: 14px;
 }
+
+/* ========================= */
+/* Present Hours */
+/* ========================= */
+
+.current-hour {
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: white;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.hour-card.current {
+    border: 3px solid #222;
+    transform: translateY(-3px);
+}
+
+/* ========================= */
+/* Day / Night */
+/* ========================= */
+
+section {
+    margin-top: 35px;
+}
+
+section h2 {
+    margin-bottom: 15px;
+}
+
+/* ========================= */
+/* Basic RWD*/
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .container {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .sun-info {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .hours-container {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .location-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
