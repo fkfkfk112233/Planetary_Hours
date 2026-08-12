@@ -159,13 +159,13 @@ public class SunCalculator {
                 normalizeHours(utcTime);
 
         // 台灣使用 UTC+8
-        double taipeiTime =
+        double localTime =
                 utcTime + 8;
 
-        taipeiTime =
-                normalizeHours(taipeiTime);
+        localTime =
+                normalizeHours(localTime);
 
-        return decimalHourToLocalTime(taipeiTime);
+        return decimalHourToLocalTime(localTime);
     }
 
     private double normalizeDegrees(double degrees) {
