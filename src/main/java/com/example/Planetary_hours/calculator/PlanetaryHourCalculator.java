@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.Planetary_hours.dto.PlanetaryHourResponse;
 import com.example.Planetary_hours.model.Planet;
 
 @Component
@@ -28,13 +29,13 @@ public class PlanetaryHourCalculator {
     /**
      * 計算完整 24 個 Planetary Hours
      */
-    public List<String> calculate(
+    public List<PlanetaryHourResponse> calculate(
             LocalDate date,
             LocalTime sunrise,
             LocalTime sunset,
             LocalTime nextSunrise) {
 
-        List<String> result = new ArrayList<>();
+    	List<PlanetaryHourResponse> result = new ArrayList<>();
 
         // -------------------------
         // 1. 找出今天的 ruling planet
@@ -78,14 +79,13 @@ public class PlanetaryHourCalculator {
                     );
 
             result.add(
-                    "Day Hour " + (i + 1)
-                    + " : "
-                    + planet
-                    + " ("
-                    + start.toLocalTime()
-                    + " - "
-                    + end.toLocalTime()
-                    + ")"
+                    new PlanetaryHourResponse(
+                            i + 1,
+                            "DAY",
+                            planet.name(),
+                            start.toLocalTime(),
+                            end.toLocalTime()
+                    )
             );
 
             start = end;
@@ -131,14 +131,13 @@ public class PlanetaryHourCalculator {
                     );
 
             result.add(
-                    "Night Hour " + (i + 1)
-                    + " : "
-                    + planet
-                    + " ("
-                    + start.toLocalTime()
-                    + " - "
-                    + end.toLocalTime()
-                    + ")"
+                    new PlanetaryHourResponse(
+                            i + 13,
+                            "NIGHT",
+                            planet.name(),
+                            start.toLocalTime(),
+                            end.toLocalTime()
+                    )
             );
 
             start = end;
