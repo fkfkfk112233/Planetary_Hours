@@ -48,6 +48,14 @@ public class GlobalExceptionHandler {
                     "date must be in yyyy-MM-dd format"
             );
         }
+        
+        if ("location".equals(e.getName())) {
+
+            return new ErrorResponse(
+                    400,
+                    "invalid location"
+            );
+        }
 
         return new ErrorResponse(
                 400,
