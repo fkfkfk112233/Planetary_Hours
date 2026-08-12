@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Planetary_hours.calculator.PlanetaryHourCalculator;
 import com.example.Planetary_hours.dto.SunData;
+import com.example.Planetary_hours.model.Location;
 
 @Service
 public class PlanetaryHourService {
@@ -25,8 +26,13 @@ public class PlanetaryHourService {
 
     public List<String> calculate(LocalDate date) {
 
+        // 第一版固定使用台北
+        Location location = Location.TAIPEI;
+        
         SunData sunData =
-        		sunDataProvider.getSunData(date);
+        		sunDataProvider.getSunData(
+        				date,
+        				location);
 
         LocalTime sunrise =
                 sunData.getSunrise();
@@ -36,7 +42,9 @@ public class PlanetaryHourService {
 
         LocalTime nextSunrise =
         		sunDataProvider
-                        .getSunData(date.plusDays(1))
+                        .getSunData(
+                        		date.plusDays(1),
+                        		location)
                         .getSunrise();
 
         return calculator.calculate(
