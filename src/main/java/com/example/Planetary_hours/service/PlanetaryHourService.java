@@ -26,11 +26,8 @@ public class PlanetaryHourService {
     }
 
     public List<PlanetaryHourResponse> calculate(
-            LocalDate date) {
-
-        // 第一版固定使用台北
-        Location location =
-                Location.TAIPEI;
+            LocalDate date,
+            Location location) {
 
         // 取得今天的日出、日落
         SunData sunData =
