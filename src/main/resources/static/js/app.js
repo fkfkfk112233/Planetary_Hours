@@ -360,8 +360,19 @@ function isTimeInRange(
     end
 ) {
 
+    // 一般情況，例如 10:00 → 11:00
+    if (start < end) {
+
+        return (
+            current >= start &&
+            current < end
+        );
+    }
+
+
+    // 跨午夜，例如 23:30 → 00:30
     return (
-        current >= start &&
+        current >= start ||
         current < end
     );
 }
