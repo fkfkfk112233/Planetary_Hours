@@ -64,7 +64,7 @@ public class PlanetaryHourService {
         // 組合完整 Response
         return new PlanetaryHoursResponse(
                 date,
-                location.name(),
+                location.getName(),
                 sunrise,
                 sunset,
                 hours
