@@ -625,6 +625,151 @@ section h2 {
 }
 
 /* ========================= */
+/* Chaldean Order */
+/* ========================= */
+.chaldean-section {
+	margin-top: 30px;
+	background: white;
+	padding: 25px;
+	border-radius: 10px;
+}
+
+.chaldean-section h2 {
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+
+.chaldean-section p {
+	line-height: 1.7;
+}
+
+/* ========================= */
+/* Chaldean Order Display */
+/* ========================= */
+.chaldean-order-display {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 25px;
+}
+
+.order-planet {
+	background: #f5f5f5;
+	padding: 15px 20px;
+	border-radius: 10px;
+	text-align: center;
+	min-width: 100px;
+}
+
+.order-planet strong {
+	display: block;
+	font-size: 16px;
+}
+
+.order-planet span {
+	display: block;
+	margin-top: 5px;
+	color: #777;
+	font-size: 14px;
+}
+
+.order-arrow {
+	font-size: 20px;
+	color: #777;
+}
+
+/* ========================= */
+/* Simple Order */
+/* ========================= */
+.simple-order {
+	background: #f5f5f5;
+	padding: 20px;
+	border-radius: 10px;
+	margin: 20px 0;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 2;
+}
+
+/* ========================= */
+/* Day Ruler */
+/* ========================= */
+.day-ruler-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 15px;
+	margin-top: 25px;
+}
+
+.day-ruler-card {
+	background: #f5f5f5;
+	padding: 20px;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.day-ruler-card strong {
+	display: block;
+	font-size: 17px;
+}
+
+.day-ruler-card span {
+	display: block;
+	margin-top: 8px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.day-ruler-card small {
+	display: block;
+	margin-top: 5px;
+	color: #777;
+}
+
+/* ========================= */
+/* Calculation */
+/* ========================= */
+.calculation-card {
+	background: #f5f5f5;
+	padding: 20px;
+	border-radius: 10px;
+	margin-top: 15px;
+}
+
+.calculation-card h3 {
+	margin-top: 0;
+}
+
+.calculation-card p {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+/* ========================= */
+/* Example */
+/* ========================= */
+.example-card {
+	background: #f5f5f5;
+	padding: 20px;
+	border-radius: 10px;
+	margin-top: 25px;
+}
+
+.example-card h3 {
+	margin-top: 0;
+}
+
+.example-order {
+	margin-top: 15px;
+	font-weight: bold;
+	line-height: 2;
+	text-align: center;
+}
+
+/* ========================= */
 /* Basic RWD*/
 /* ========================= */
 @media ( max-width : 768px) {
@@ -687,5 +832,20 @@ section h2 {
 	.planet-info-row {
 		grid-template-columns: 1fr;
 		gap: 5px;
+	}
+	.day-ruler-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.chaldean-order-display {
+		flex-direction: column;
+	}
+	.order-arrow {
+		transform: rotate(90deg);
+	}
+	.simple-order {
+		font-size: 16px;
+	}
+	.example-order {
+		font-size: 14px;
 	}
 }
