@@ -28,6 +28,29 @@ const activityList =
         "activityList"
     );
 
+const editModal =
+    document.getElementById("editModal");
+
+const editActivityForm =
+    document.getElementById("editActivityForm");
+
+const editActivityId =
+    document.getElementById("editActivityId");
+
+const editPlanet =
+    document.getElementById("editPlanet");
+
+const editActivityName =
+    document.getElementById("editActivityName");
+
+const editActivityDescription =
+    document.getElementById("editActivityDescription");
+
+const closeEditModal =
+    document.getElementById("closeEditModal");
+
+const cancelEdit =
+    document.getElementById("cancelEdit");
 
 // ========================================
 // 頁面載入
@@ -380,4 +403,50 @@ function createActivityCard(
 
 
     return card;
+}
+
+// ========================================
+// 開啟 Edit Modal
+// ========================================
+
+function editActivity(id) {
+
+    fetch(`/api/activities/${id}`)
+        .then(response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "無法取得 Activity"
+                );
+            }
+
+            return response.json();
+        })
+        .then(activity => {
+
+            editActivityId.value =
+                activity.id;
+
+            editPlanet.value =
+                activity.planet;
+
+            editActivityName.value =
+                activity.name;
+
+            editActivityDescription.value =
+                activity.description || "";
+
+            editModal.classList.add(
+                "show"
+            );
+        })
+        .catch(error => {
+
+            console.error(error);
+
+            alert(
+                "無法取得 Activity"
+            );
+        });
 }
