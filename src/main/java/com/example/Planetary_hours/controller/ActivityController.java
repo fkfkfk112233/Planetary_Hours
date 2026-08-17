@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.Planetary_hours.dto.ActivityRequest;
 import com.example.Planetary_hours.dto.ActivityResponse;
 import com.example.Planetary_hours.model.Activity;
 import com.example.Planetary_hours.model.Planet;
 import com.example.Planetary_hours.service.ActivityService;
+
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/activities")
@@ -95,11 +99,12 @@ public class ActivityController {
     @PostMapping
     public ResponseEntity<ActivityResponse>
             create(
-                    @RequestBody Activity activity) {
+            		@Valid
+            		@RequestBody ActivityRequest request) {
 
         Activity saved =
                 activityService.create(
-                        activity
+                        request
                 );
 
         return ResponseEntity.ok(
@@ -113,14 +118,16 @@ public class ActivityController {
     // ========================================
 
     @PutMapping("/{id}")
-    public ResponseEntity<Activity> update(
+    public ResponseEntity<ActivityResponse> update(
             @PathVariable Long id,
-            @RequestBody Activity activity) {
+
+            @Valid
+            @RequestBody ActivityRequest request) {
 
         Activity updated =
                 activityService.update(
                         id,
-                        activity
+                        request
                 );
 
         if (updated == null) {
@@ -131,7 +138,7 @@ public class ActivityController {
         }
 
         return ResponseEntity.ok(
-                updated
+                ActivityResponse.from(updated)
         );
     }
 
