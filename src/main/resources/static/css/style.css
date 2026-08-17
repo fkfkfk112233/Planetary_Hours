@@ -26,6 +26,42 @@ h1 {
 }
 
 /* ========================= */
+/* Navbar */
+/* ========================= */
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 5%;
+	background: white;
+	border-bottom: 1px solid #ddd;
+}
+
+.navbar-brand {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.navbar-links {
+	display: flex;
+	gap: 20px;
+}
+
+.navbar-links a {
+	color: #222;
+	text-decoration: none;
+	padding: 8px 5px;
+}
+
+.navbar-links a:hover {
+	text-decoration: underline;
+}
+
+.navbar-links a.active {
+	font-weight: bold;
+}
+
+/* ========================= */
 /* 查詢區 */
 /* ========================= */
 .search-panel {
@@ -108,18 +144,14 @@ button {
 /* Planetary Hours */
 /* ========================= */
 .hours-container {
-    display: none;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 15px;
-
-    margin-top: 15px;
+	display: none;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 15px;
+	margin-top: 15px;
 }
 
 .hours-container.open {
-    display: grid;
+	display: grid;
 }
 
 .hour-card {
@@ -233,42 +265,63 @@ section h2 {
 /* ========================= */
 /* Day / Night Toggle */
 /* ========================= */
-
 .hours-section {
-    margin-top: 35px;
+	margin-top: 35px;
 }
 
 .hours-toggle {
-    width: 100%;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 18px 20px;
-
-    background: white;
-
-    border-radius: 10px;
-
-    font-size: 20px;
-    font-weight: bold;
-
-    text-align: left;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 18px 20px;
+	background: white;
+	border-radius: 10px;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
 }
 
 .hours-toggle:hover {
-    background: #eeeeee;
+	background: #eeeeee;
 }
 
 .toggle-icon {
-    font-size: 14px;
+	font-size: 14px;
+}
+
+/* ========================= */
+/* Home */
+/* ========================= */
+
+.home-section {
+    margin-top: 30px;
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 10px;
+}
+
+.home-section h2 {
+    margin-top: 0;
 }
 
 /* ========================= */
 /* Basic RWD*/
 /* ========================= */
 @media ( max-width : 768px) {
+	.navbar {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 15px;
+	}
+	.navbar-links {
+		width: 100%;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
 	.container {
 		width: 95%;
 		margin: 20px auto;
