@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -37,15 +38,26 @@ public class GlobalExceptionHandler {
     // ========================================
 
     @ExceptionHandler(
-            MethodArgumentTypeMismatchException.class
+            MethodArgumentNotValidException.class
     )
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleTypeMismatch(
-            MethodArgumentTypeMismatchException exception) {
+    public ErrorResponse handleValidation(
+            MethodArgumentNotValidException exception) {
+
+        String message =
+                exception.getBindingResult()
+                        .getFieldErrors()
+                        .stream()
+                        .map(error ->
+                                error.getDefaultMessage()
+                        )
+                        .findFirst()
+                        .orElse("資料格式錯誤");
 
         return new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request"
+
         );
     }
 
