@@ -1,5 +1,6 @@
 package com.example.Planetary_hours.exception;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 import org.springframework.http.HttpStatus;
@@ -14,69 +15,73 @@ import com.example.Planetary_hours.dto.ErrorResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * 缺少必要的 Query Parameter
-     */
-    @ExceptionHandler(
-            MissingServletRequestParameterException.class
-    )
+
+    // ========================================
+    // 日期格式錯誤
+    // ========================================
+
+    @ExceptionHandler(DateTimeParseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMissingParameter(
-            MissingServletRequestParameterException e) {
+    public ErrorResponse handleDateTimeParseException(
+            DateTimeParseException exception) {
 
         return new ErrorResponse(
-                400,
-                e.getParameterName()
-                        + " is required"
+                HttpStatus.BAD_REQUEST.value(),
+                "Bad Request"
         );
     }
 
-    /**
-     * 日期格式錯誤
-     */
+
+    // ========================================
+    // Request Parameter 型別錯誤
+    // ========================================
+
     @ExceptionHandler(
             MethodArgumentTypeMismatchException.class
     )
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleTypeMismatch(
-            MethodArgumentTypeMismatchException e) {
-
-        if ("date".equals(e.getName())) {
-
-            return new ErrorResponse(
-                    400,
-                    "date must be in yyyy-MM-dd format"
-            );
-        }
-        
-        if ("location".equals(e.getName())) {
-
-            return new ErrorResponse(
-                    400,
-                    "invalid location"
-            );
-        }
+            MethodArgumentTypeMismatchException exception) {
 
         return new ErrorResponse(
-                400,
-                "invalid parameter: "
-                        + e.getName()
+                HttpStatus.BAD_REQUEST.value(),
+                "Bad Request"
         );
     }
 
-    /**
-     * 日期解析錯誤
-     */
+
+    // ========================================
+    // 缺少 Request Parameter
+    // ========================================
+
     @ExceptionHandler(
-            DateTimeParseException.class
+            MissingServletRequestParameterException.class
     )
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleDateFormat(
-            DateTimeParseException e) {
+    public ErrorResponse handleMissingParameter(
+            MissingServletRequestParameterException exception) {
 
         return new ErrorResponse(
-                400,
-                "date must be in yyyy-MM-dd format"
+                HttpStatus.BAD_REQUEST.value(),
+                "Bad Request"
+        );
+    }
+
+
+    // ========================================
+    // 其他未預期錯誤
+    // ========================================
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(
+            HttpStatus.INTERNAL_SERVER_ERROR
+    )
+    public ErrorResponse handleException(
+            Exception exception) {
+
+        return new ErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Internal Server Error"
         );
     }
 }
