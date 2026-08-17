@@ -34,7 +34,7 @@ public class DataInitializer implements CommandLineRunner {
 
         // Mars 火星
         addActivity(Planet.MARS, "運動");
-        addActivity(Planet.MARS, "比賽");
+        addActivity(Planet.MARS, "競爭");
         addActivity(Planet.MARS, "執行力工作");
 
         // Sun 太陽
