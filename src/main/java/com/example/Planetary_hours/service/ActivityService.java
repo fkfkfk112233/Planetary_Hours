@@ -26,6 +26,12 @@ public class ActivityService {
     public List<Activity> findByPlanet(Planet planet) {
         return activityRepository.findByPlanetAndDeletedFalse(planet);
     }
+    
+    public Activity findById(Long id) {
+
+        return activityRepository.findById(id)
+                .orElse(null);
+    }
 
     // 新增 Activity
     public Activity create(Activity activity) {
