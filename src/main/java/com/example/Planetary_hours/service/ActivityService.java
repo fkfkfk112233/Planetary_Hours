@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.Planetary_hours.dto.ActivityRequest;
 import com.example.Planetary_hours.model.Activity;
 import com.example.Planetary_hours.model.Planet;
 import com.example.Planetary_hours.repository.ActivityRepository;
@@ -12,6 +13,7 @@ import com.example.Planetary_hours.repository.ActivityRepository;
 public class ActivityService {
 
     private final ActivityRepository activityRepository;
+
 
     public ActivityService(
             ActivityRepository activityRepository) {
@@ -33,7 +35,7 @@ public class ActivityService {
 
 
     // ========================================
-    // 查詢指定 Planet 的 Activity
+    // 查詢指定 Planet
     // ========================================
 
     public List<Activity> findByPlanet(
@@ -47,8 +49,7 @@ public class ActivityService {
 
 
     // ========================================
-    // 查詢指定 ID 的 Activity
-    // 只能取得尚未刪除的資料
+    // 查詢指定 ID
     // ========================================
 
     public Activity findById(Long id) {
@@ -64,9 +65,24 @@ public class ActivityService {
     // ========================================
 
     public Activity create(
-            Activity activity) {
+            ActivityRequest request) {
 
-        // Activity 新增時一定是啟用狀態
+        Activity activity =
+                new Activity();
+
+        activity.setPlanet(
+                request.getPlanet()
+        );
+
+        activity.setName(
+                request.getName()
+        );
+
+        activity.setDescription(
+                request.getDescription()
+        );
+
+        // deleted 永遠由後端控制
         activity.setDeleted(false);
 
         return activityRepository.save(
@@ -81,22 +97,22 @@ public class ActivityService {
 
     public Activity update(
             Long id,
-            Activity activity) {
+            ActivityRequest request) {
 
         return activityRepository
                 .findByIdAndDeletedFalse(id)
                 .map(existing -> {
 
                     existing.setPlanet(
-                            activity.getPlanet()
+                            request.getPlanet()
                     );
 
                     existing.setName(
-                            activity.getName()
+                            request.getName()
                     );
 
                     existing.setDescription(
-                            activity.getDescription()
+                            request.getDescription()
                     );
 
                     return activityRepository.save(
@@ -108,7 +124,7 @@ public class ActivityService {
 
 
     // ========================================
-    // 軟刪除 Activity
+    // Soft Delete
     // ========================================
 
     public boolean delete(Long id) {
