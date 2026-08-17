@@ -56,8 +56,7 @@ public class GlobalExceptionHandler {
 
         return new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
-                "Bad Request"
-
+                message
         );
     }
 
