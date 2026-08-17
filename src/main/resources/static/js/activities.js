@@ -236,22 +236,42 @@ function displayActivities(
     // 建立 Planet Card
     // -------------------------------
 
-    Object.entries(
-        groupedActivities
-    ).forEach(
-        ([planet, planetActivities]) => {
+	const planetOrder = [
+	    "SATURN",
+	    "JUPITER",
+	    "MARS",
+	    "SUN",
+	    "VENUS",
+	    "MERCURY",
+	    "MOON"
+	];
 
-            const planetCard =
-                createPlanetCard(
-                    planet,
-                    planetActivities
-                );
 
-            activityList.appendChild(
-                planetCard
-            );
-        }
-    );
+	planetOrder.forEach(
+	    planet => {
+
+	        const planetActivities =
+	            groupedActivities[planet];
+
+
+	        if (!planetActivities) {
+
+	            return;
+	        }
+
+
+	        const planetCard =
+	            createPlanetCard(
+	                planet,
+	                planetActivities
+	            );
+
+
+	        activityList.appendChild(
+	            planetCard
+	        );
+	    }
+	);
 }
 
 
@@ -449,4 +469,149 @@ function editActivity(id) {
                 "無法取得 Activity"
             );
         });
+}
+
+// ========================================
+// 儲存 Edit
+// ========================================
+
+editActivityForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        const id =
+            editActivityId.value;
+
+
+        const activity = {
+
+            planet:
+                editPlanet.value,
+
+            name:
+                editActivityName.value,
+
+            description:
+                editActivityDescription.value
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/activities/${id}`,
+                    {
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                activity
+                            )
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "修改 Activity 失敗"
+                );
+            }
+
+
+            closeModal();
+
+            loadActivities();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "修改 Activity 失敗"
+            );
+        }
+    }
+);
+
+// ========================================
+// 關閉 Edit Modal
+// ========================================
+
+function closeModal() {
+
+    editModal.classList.remove(
+        "show"
+    );
+}
+
+
+closeEditModal.addEventListener(
+    "click",
+    closeModal
+);
+
+
+cancelEdit.addEventListener(
+    "click",
+    closeModal
+);
+
+// ========================================
+// Soft Delete Activity
+// ========================================
+
+async function deleteActivity(id) {
+
+    const confirmed =
+        confirm(
+            "確定要刪除這個 Activity 嗎？"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/activities/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "刪除 Activity 失敗"
+            );
+        }
+
+
+        loadActivities();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "刪除 Activity 失敗"
+        );
+    }
 }
