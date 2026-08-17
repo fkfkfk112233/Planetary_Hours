@@ -25,6 +25,25 @@ const currentHour =
         "currentHour"
     );
 
+const currentActivities =
+    document.getElementById(
+        "currentActivities"
+    );
+
+
+// ========================================
+// 儲存目前查詢結果
+// ========================================
+
+let currentData = null;
+
+
+// ========================================
+// 記錄目前顯示的 Planet
+// ========================================
+
+let currentPlanet = null;
+
 
 // ========================================
 // 取得台灣今天日期
@@ -47,6 +66,27 @@ function getTaiwanDate() {
 
 
 // ========================================
+// 取得台灣目前時間 HH:mm:ss
+// ========================================
+
+function getTaiwanTime() {
+
+    return new Intl.DateTimeFormat(
+        "en-GB",
+        {
+            timeZone: "Asia/Taipei",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+        }
+    ).format(
+        new Date()
+    );
+}
+
+
+// ========================================
 // 頁面載入時設定今天
 // ========================================
 
@@ -55,6 +95,16 @@ const today =
 
 dateInput.value =
     today;
+
+
+// ========================================
+// 每秒更新 Current Planetary Hour
+// ========================================
+
+setInterval(
+    updateCurrentPlanetaryHour,
+    1000
+);
 
 
 // ========================================
@@ -162,6 +212,14 @@ async function calculatePlanetaryHours() {
 
 function displayResult(data) {
 
+    currentData =
+        data;
+
+    // 每次重新查詢時清除目前 Planet
+    currentPlanet =
+        null;
+
+
     document.getElementById(
         "resultDate"
     ).textContent =
@@ -219,7 +277,8 @@ function displayResult(data) {
     );
 
 
-    findCurrentHour(data);
+    // 找目前 Planetary Hour
+    updateCurrentPlanetaryHour();
 }
 
 
@@ -278,44 +337,44 @@ function formatTime(time) {
 
 
 // ========================================
-// 找出目前 Planetary Hour
+// 更新目前 Planetary Hour
 // ========================================
 
-function findCurrentHour(data) {
+async function updateCurrentPlanetaryHour() {
+
+    // 尚未查詢資料
+    if (!currentData) {
+
+        return;
+    }
+
 
     const today =
         getTaiwanDate();
 
 
     // 只有查詢今天才顯示
-    if (data.date !== today) {
+    if (currentData.date !== today) {
 
-        currentHour.textContent =
+        currentHour.innerHTML =
             "";
+
+        currentActivities.innerHTML =
+            "";
+
+        currentPlanet =
+            null;
 
         return;
     }
 
 
-    const now =
-        new Date();
-
-
     const currentTime =
-        new Intl.DateTimeFormat(
-            "en-GB",
-            {
-                timeZone: "Asia/Taipei",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: false
-            }
-        ).format(now);
+        getTaiwanTime();
 
 
     const hour =
-        data.hours.find(
+        currentData.hours.find(
             item =>
                 isTimeInRange(
                     currentTime,
@@ -327,26 +386,183 @@ function findCurrentHour(data) {
 
     if (!hour) {
 
-        currentHour.textContent =
+        currentHour.innerHTML =
             "";
+
+        currentActivities.innerHTML =
+            "";
+
+        currentPlanet =
+            null;
 
         return;
     }
 
 
+    // -------------------------------
+    // 顯示目前時間 + Planetary Hour
+    // -------------------------------
+
     currentHour.innerHTML = `
-        Current Planetary Hour:
-        <strong>
+        <div class="current-time">
+            ${currentTime}
+        </div>
+
+        <div class="current-planet">
             Hour ${hour.hour}
             -
             ${hour.planet}
-        </strong>
+        </div>
     `;
+
+
+    // -------------------------------
+    // Highlight 目前 Hour
+    // -------------------------------
+
+    // 先清除之前的 Highlight
+    document.querySelectorAll(
+        ".hour-card.current"
+    ).forEach(
+        card => {
+            card.classList.remove(
+                "current"
+            );
+        }
+    );
 
 
     highlightCurrentHour(
         hour.hour
     );
+
+
+    // -------------------------------
+    // Planet 改變才重新查 Activity
+    // -------------------------------
+
+    if (
+        currentPlanet !==
+        hour.planet
+    ) {
+
+        currentPlanet =
+            hour.planet;
+
+        await loadCurrentActivities(
+            hour.planet
+        );
+    }
+}
+
+
+// ========================================
+// 查詢目前 Planet 的 Activities
+// ========================================
+
+async function loadCurrentActivities(
+    planet
+) {
+
+    currentActivities.innerHTML = `
+        <div class="activities-title">
+            Activities
+        </div>
+
+        <div class="activities-loading">
+            Loading...
+        </div>
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/activities/planet/${planet}`
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "無法取得 Activities"
+            );
+        }
+
+
+        const activities =
+            await response.json();
+
+
+        displayCurrentActivities(
+            activities
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        currentActivities.innerHTML = `
+            <div class="activities-title">
+                Activities
+            </div>
+
+            <div class="activities-error">
+                無法取得 Activities
+            </div>
+        `;
+    }
+}
+
+
+// ========================================
+// 顯示目前 Planet 的 Activities
+// ========================================
+
+function displayCurrentActivities(
+    activities
+) {
+
+    if (
+        activities.length === 0
+    ) {
+
+        currentActivities.innerHTML = `
+            <div class="activities-title">
+                Activities
+            </div>
+
+            <div class="activities-empty">
+                目前沒有可用的 Activity
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const activityItems =
+        activities
+            .map(
+                activity => `
+                    <div class="activity-item">
+                        ${activity.name}
+                    </div>
+                `
+            )
+            .join("");
+
+
+    currentActivities.innerHTML = `
+        <div class="activities-title">
+            Activities
+        </div>
+
+        <div class="activity-list">
+            ${activityItems}
+        </div>
+    `;
 }
 
 
