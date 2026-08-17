@@ -15,28 +15,49 @@ public class ActivityController {
 
     private final ActivityService activityService;
 
-    public ActivityController(ActivityService activityService) {
-        this.activityService = activityService;
+
+    public ActivityController(
+            ActivityService activityService) {
+
+        this.activityService =
+                activityService;
     }
 
-    // 查詢所有尚未被軟刪除的 Activity
+
+    // ========================================
+    // 查詢所有 Activity
+    // ========================================
+
     @GetMapping
     public ResponseEntity<List<Activity>> findAll() {
+
         return ResponseEntity.ok(
                 activityService.findAll()
         );
     }
 
-    // 查詢指定 Planet 的 Activity
+
+    // ========================================
+    // 查詢指定 Planet
+    // ========================================
+
     @GetMapping("/planet/{planet}")
     public ResponseEntity<List<Activity>> findByPlanet(
             @PathVariable Planet planet) {
 
         return ResponseEntity.ok(
-                activityService.findByPlanet(planet)
+                activityService.findByPlanet(
+                        planet
+                )
         );
     }
-    
+
+
+    // ========================================
+    // 查詢指定 ID
+    // 只允許取得尚未刪除的資料
+    // ========================================
+
     @GetMapping("/{id}")
     public ResponseEntity<Activity> findById(
             @PathVariable Long id) {
@@ -45,38 +66,69 @@ public class ActivityController {
                 activityService.findById(id);
 
         if (activity == null) {
-            return ResponseEntity.notFound().build();
+
+            return ResponseEntity
+                    .notFound()
+                    .build();
         }
 
-        return ResponseEntity.ok(activity);
+        return ResponseEntity.ok(
+                activity
+        );
     }
 
+
+    // ========================================
     // 新增 Activity
+    // ========================================
+
     @PostMapping
     public ResponseEntity<Activity> create(
             @RequestBody Activity activity) {
 
         Activity saved =
-                activityService.create(activity);
+                activityService.create(
+                        activity
+                );
 
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(
+                saved
+        );
     }
 
+
+    // ========================================
     // 修改 Activity
+    // ========================================
+
     @PutMapping("/{id}")
     public ResponseEntity<Activity> update(
             @PathVariable Long id,
             @RequestBody Activity activity) {
 
-        activity.setId(id);
-
         Activity updated =
-                activityService.update(activity);
+                activityService.update(
+                        id,
+                        activity
+                );
 
-        return ResponseEntity.ok(updated);
+        if (updated == null) {
+
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+
+        return ResponseEntity.ok(
+                updated
+        );
     }
 
+
+    // ========================================
     // 軟刪除 Activity
+    // ========================================
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @PathVariable Long id) {
@@ -85,9 +137,14 @@ public class ActivityController {
                 activityService.delete(id);
 
         if (!deleted) {
-            return ResponseEntity.notFound().build();
+
+            return ResponseEntity
+                    .notFound()
+                    .build();
         }
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }
