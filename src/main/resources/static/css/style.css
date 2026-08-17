@@ -474,11 +474,15 @@ section h2 {
 }
 
 
+/* ========================= */
+/* Edit Activity Card */
+/* ========================= */
+
 .modal-content {
 
-    width: 100%;
+    width: 90%;
 
-    max-width: 600px;
+    max-width: 1100px;
 
     background: white;
 
@@ -487,6 +491,10 @@ section h2 {
     border-radius: 10px;
 }
 
+
+/* ========================= */
+/* Header */
+/* ========================= */
 
 .modal-header {
 
@@ -517,6 +525,46 @@ section h2 {
     line-height: 1;
 }
 
+
+/* ========================= */
+/* Form */
+/* ========================= */
+
+.modal-content .form-group {
+
+    margin-bottom: 20px;
+}
+
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+
+    width: 100%;
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    font-family: Arial, sans-serif;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
+}
+
+
+.modal-content textarea {
+
+    resize: vertical;
+
+    min-height: 100px;
+}
+
+
+/* ========================= */
+/* Buttons */
+/* ========================= */
 
 .modal-actions {
 
