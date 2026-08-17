@@ -445,6 +445,91 @@ section h2 {
 }
 
 /* ========================= */
+/* Edit Modal */
+/* ========================= */
+
+.modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.4);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    z-index: 1000;
+}
+
+
+.modal.show {
+
+    display: flex;
+}
+
+
+.modal-content {
+
+    width: 100%;
+
+    max-width: 600px;
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 10px;
+}
+
+
+.modal-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+
+.modal-header h2 {
+
+    margin: 0;
+}
+
+
+.modal-close {
+
+    padding: 5px 10px;
+
+    background: transparent;
+
+    font-size: 28px;
+
+    line-height: 1;
+}
+
+
+.modal-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+/* ========================= */
 /* Basic RWD*/
 /* ========================= */
 @media ( max-width : 768px) {
