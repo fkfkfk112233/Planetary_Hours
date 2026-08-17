@@ -281,6 +281,14 @@ function displayResult(data) {
     updateCurrentPlanetaryHour();
 }
 
+// ========================================
+// Day / Night 摺疊按鈕
+// ========================================
+
+const hoursToggleButtons =
+    document.querySelectorAll(
+        ".hours-toggle"
+    );
 
 // ========================================
 // 建立 Hour Card
@@ -642,3 +650,57 @@ function clearError() {
     errorMessage.style.display =
         "none";
 }
+
+// ========================================
+// Day / Night 摺疊功能
+// ========================================
+
+hoursToggleButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const targetId =
+                    button.dataset.target;
+
+                const container =
+                    document.getElementById(
+                        targetId
+                    );
+
+                const icon =
+                    button.querySelector(
+                        ".toggle-icon"
+                    );
+
+
+                const isOpen =
+                    container.classList.contains(
+                        "open"
+                    );
+
+
+                if (isOpen) {
+
+                    container.classList.remove(
+                        "open"
+                    );
+
+                    icon.textContent =
+                        "▼";
+
+                } else {
+
+                    container.classList.add(
+                        "open"
+                    );
+
+                    icon.textContent =
+                        "▲";
+                }
+            }
+        );
+    }
+);
