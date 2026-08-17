@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.Planetary_hours.model.Activity;
+import com.example.Planetary_hours.model.Planet;
 import com.example.Planetary_hours.service.ActivityService;
 
 @RestController
@@ -19,19 +20,39 @@ public class ActivityController {
     }
 
     // GET /api/activities
+    // 查詢所有尚未被軟刪除的 Activity
     @GetMapping
     public ResponseEntity<List<Activity>> findAll() {
-        return ResponseEntity.ok(activityService.findAll());
+        return ResponseEntity.ok(
+                activityService.findAll()
+        );
+    }
+
+    // GET /api/activities/planet/{planet}
+    // 查詢指定 Planet 的 Activity
+    @GetMapping("/planet/{planet}")
+    public ResponseEntity<List<Activity>> findByPlanet(
+            @PathVariable Planet planet) {
+
+        return ResponseEntity.ok(
+                activityService.findByPlanet(planet)
+        );
     }
 
     // POST /api/activities
+    // 新增 Activity
     @PostMapping
-    public ResponseEntity<Activity> create(@RequestBody Activity activity) {
-        Activity saved = activityService.create(activity);
+    public ResponseEntity<Activity> create(
+            @RequestBody Activity activity) {
+
+        Activity saved =
+                activityService.create(activity);
 
         return ResponseEntity.ok(saved);
     }
-    
+
+    // PUT /api/activities/{id}
+    // 修改 Activity
     @PutMapping("/{id}")
     public ResponseEntity<Activity> update(
             @PathVariable Long id,
@@ -39,15 +60,20 @@ public class ActivityController {
 
         activity.setId(id);
 
-        Activity updated = activityService.update(activity);
+        Activity updated =
+                activityService.update(activity);
 
         return ResponseEntity.ok(updated);
     }
-    
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
 
-        boolean deleted = activityService.delete(id);
+    // DELETE /api/activities/{id}
+    // 軟刪除 Activity
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id) {
+
+        boolean deleted =
+                activityService.delete(id);
 
         if (!deleted) {
             return ResponseEntity.notFound().build();
