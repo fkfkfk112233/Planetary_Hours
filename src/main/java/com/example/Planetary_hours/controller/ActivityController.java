@@ -19,7 +19,6 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    // GET /api/activities
     // 查詢所有尚未被軟刪除的 Activity
     @GetMapping
     public ResponseEntity<List<Activity>> findAll() {
@@ -28,7 +27,6 @@ public class ActivityController {
         );
     }
 
-    // GET /api/activities/planet/{planet}
     // 查詢指定 Planet 的 Activity
     @GetMapping("/planet/{planet}")
     public ResponseEntity<List<Activity>> findByPlanet(
@@ -38,8 +36,21 @@ public class ActivityController {
                 activityService.findByPlanet(planet)
         );
     }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Activity> findById(
+            @PathVariable Long id) {
 
-    // POST /api/activities
+        Activity activity =
+                activityService.findById(id);
+
+        if (activity == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(activity);
+    }
+
     // 新增 Activity
     @PostMapping
     public ResponseEntity<Activity> create(
@@ -51,7 +62,6 @@ public class ActivityController {
         return ResponseEntity.ok(saved);
     }
 
-    // PUT /api/activities/{id}
     // 修改 Activity
     @PutMapping("/{id}")
     public ResponseEntity<Activity> update(
@@ -66,7 +76,6 @@ public class ActivityController {
         return ResponseEntity.ok(updated);
     }
 
-    // DELETE /api/activities/{id}
     // 軟刪除 Activity
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
