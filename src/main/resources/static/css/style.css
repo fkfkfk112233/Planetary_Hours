@@ -447,134 +447,181 @@ section h2 {
 /* ========================= */
 /* Edit Modal */
 /* ========================= */
-
 .modal {
-
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0, 0, 0, 0.4);
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 20px;
-
-    z-index: 1000;
+	display: none;
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.4);
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	z-index: 1000;
 }
-
 
 .modal.show {
-
-    display: flex;
+	display: flex;
 }
-
 
 /* ========================= */
 /* Edit Activity Card */
 /* ========================= */
-
 .modal-content {
-
-    width: 90%;
-
-    max-width: 1100px;
-
-    background: white;
-
-    padding: 25px;
-
-    border-radius: 10px;
+	width: 90%;
+	max-width: 1100px;
+	background: white;
+	padding: 25px;
+	border-radius: 10px;
 }
-
 
 /* ========================= */
 /* Header */
 /* ========================= */
-
 .modal-header {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 25px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 25px;
 }
-
 
 .modal-header h2 {
-
-    margin: 0;
+	margin: 0;
 }
-
 
 .modal-close {
-
-    padding: 5px 10px;
-
-    background: transparent;
-
-    font-size: 28px;
-
-    line-height: 1;
+	padding: 5px 10px;
+	background: transparent;
+	font-size: 28px;
+	line-height: 1;
 }
-
 
 /* ========================= */
 /* Form */
 /* ========================= */
-
 .modal-content .form-group {
-
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
-
-.modal-content input,
-.modal-content select,
-.modal-content textarea {
-
-    width: 100%;
-
-    padding: 10px;
-
-    font-size: 16px;
-
-    font-family: Arial, sans-serif;
-
-    border: 1px solid #ccc;
-
-    border-radius: 6px;
+.modal-content input, .modal-content select, .modal-content textarea {
+	width: 100%;
+	padding: 10px;
+	font-size: 16px;
+	font-family: Arial, sans-serif;
+	border: 1px solid #ccc;
+	border-radius: 6px;
 }
-
 
 .modal-content textarea {
-
-    resize: vertical;
-
-    min-height: 100px;
+	resize: vertical;
+	min-height: 100px;
 }
-
 
 /* ========================= */
 /* Buttons */
 /* ========================= */
-
 .modal-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 25px;
+}
 
-    display: flex;
+/* ========================= */
+/* Home */
+/* ========================= */
+.home-section {
+	margin-top: 30px;
+	background: white;
+	padding: 25px;
+	border-radius: 10px;
+}
 
-    justify-content: flex-end;
+.home-section h2 {
+	margin-top: 0;
+	margin-bottom: 20px;
+}
 
-    gap: 10px;
+.home-section p {
+	line-height: 1.7;
+}
 
-    margin-top: 25px;
+/* ========================= */
+/* Core Concept */
+/* ========================= */
+.concept-card {
+	background: #f5f5f5;
+	padding: 20px;
+	border-radius: 10px;
+	margin-top: 15px;
+}
+
+.concept-card h3 {
+	margin-top: 0;
+}
+
+/* ========================= */
+/* Seven Planets */
+/* ========================= */
+.planet-seven-list {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 15px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.planet-name-card {
+	background: #f5f5f5;
+	padding: 20px;
+	border-radius: 10px;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.planet-name-card span {
+	display: block;
+	margin-top: 5px;
+	font-size: 14px;
+	font-weight: normal;
+	color: #777;
+}
+
+/* ========================= */
+/* Planet Information */
+/* ========================= */
+.planet-info-card {
+	background: #f5f5f5;
+	padding: 25px;
+	border-radius: 10px;
+	margin-top: 20px;
+}
+
+.planet-info-card h3 {
+	margin-top: 0;
+	font-size: 22px;
+}
+
+.planet-info-card h3 span {
+	margin-left: 8px;
+	font-size: 15px;
+	font-weight: normal;
+	color: #777;
+}
+
+.planet-info-row {
+	display: grid;
+	grid-template-columns: 100px 1fr;
+	gap: 20px;
+	padding: 15px 0;
+	border-top: 1px solid #ddd;
+}
+
+.planet-info-row strong {
+	font-size: 15px;
+}
+
+.planet-info-row p {
+	margin: 0;
 }
 
 /* ========================= */
@@ -633,5 +680,12 @@ section h2 {
 	}
 	.planet-filter {
 		width: 100%;
+	}
+	.planet-seven-list {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.planet-info-row {
+		grid-template-columns: 1fr;
+		gap: 5px;
 	}
 }
