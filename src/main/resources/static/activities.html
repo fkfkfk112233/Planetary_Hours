@@ -3,245 +3,253 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Planetary Hours - Activities</title>
+<title>Planetary Hours - Activities</title>
 
-    <link rel="stylesheet"
-          href="/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
 </head>
 
 <body>
 
-    <!-- ========================= -->
-    <!-- Navbar -->
-    <!-- ========================= -->
+	<!-- ========================= -->
+	<!-- Navbar -->
+	<!-- ========================= -->
 
-    <nav class="navbar">
+	<nav class="navbar">
 
-        <div class="navbar-brand">
-            Planetary Hours
-        </div>
+		<div class="navbar-brand">Planetary Hours</div>
 
-        <div class="navbar-links">
+		<div class="navbar-links">
 
-            <a href="/">
-                Home
-            </a>
+			<a href="/"> Home </a> <a href="/planetary-hours.html"> Planetary
+				Hours </a> <a href="/activities.html" class="active"> Activities </a> <a
+				href="/chaldean-order.html"> Chaldean Order </a>
 
-            <a href="/planetary-hours.html">
-                Planetary Hours
-            </a>
+		</div>
 
-            <a href="/activities.html"
-               class="active">
-                Activities
-            </a>
+	</nav>
 
-            <a href="/chaldean-order.html">
-                Chaldean Order
-            </a>
 
-        </div>
+	<!-- ========================= -->
+	<!-- Main -->
+	<!-- ========================= -->
 
-    </nav>
+	<main class="container">
 
+		<h1>Activities</h1>
 
-    <!-- ========================= -->
-    <!-- Main -->
-    <!-- ========================= -->
+		<p class="description">Manage activities associated with each
+			planet.</p>
 
-    <main class="container">
 
-        <h1>Activities</h1>
+		<!-- ========================= -->
+		<!-- Add Activity -->
+		<!-- ========================= -->
 
-        <p class="description">
-            Manage activities associated with each planet.
-        </p>
+		<section class="activity-form-section">
 
+			<h2>Add Activity</h2>
 
-        <!-- ========================= -->
-        <!-- Add Activity -->
-        <!-- ========================= -->
 
-        <section class="activity-form-section">
+			<form id="activityForm">
 
-            <h2>Add Activity</h2>
 
+				<!-- Planet -->
 
-            <form id="activityForm">
+				<div class="form-group">
 
+					<label for="planet"> Planet </label> <select id="planet" required>
 
-                <!-- Planet -->
+						<option value="">Select Planet</option>
 
-                <div class="form-group">
+						<option value="SATURN">Saturn</option>
 
-                    <label for="planet">
-                        Planet
-                    </label>
+						<option value="JUPITER">Jupiter</option>
 
-                    <select
-                        id="planet"
-                        required
-                    >
+						<option value="MARS">Mars</option>
 
-                        <option value="">
-                            Select Planet
-                        </option>
+						<option value="SUN">Sun</option>
 
-                        <option value="SATURN">
-                            Saturn
-                        </option>
+						<option value="VENUS">Venus</option>
 
-                        <option value="JUPITER">
-                            Jupiter
-                        </option>
+						<option value="MERCURY">Mercury</option>
 
-                        <option value="MARS">
-                            Mars
-                        </option>
+						<option value="MOON">Moon</option>
 
-                        <option value="SUN">
-                            Sun
-                        </option>
+					</select>
 
-                        <option value="VENUS">
-                            Venus
-                        </option>
+				</div>
 
-                        <option value="MERCURY">
-                            Mercury
-                        </option>
 
-                        <option value="MOON">
-                            Moon
-                        </option>
+				<!-- Activity -->
 
-                    </select>
+				<div class="form-group">
 
-                </div>
+					<label for="activityName"> Activity </label> <input type="text"
+						id="activityName" required>
 
+				</div>
 
-                <!-- Activity -->
 
-                <div class="form-group">
+				<!-- Description -->
 
-                    <label for="activityName">
-                        Activity
-                    </label>
+				<div class="form-group">
 
-                    <input
-                        type="text"
-                        id="activityName"
-                        required
-                    >
+					<label for="activityDescription"> Description </label>
 
-                </div>
+					<textarea id="activityDescription" rows="4"></textarea>
 
+				</div>
 
-                <!-- Description -->
 
-                <div class="form-group">
+				<!-- Button -->
 
-                    <label for="activityDescription">
-                        Description
-                    </label>
+				<button type="submit" class="add-activity-button">
+					Add Activity</button>
 
-                    <textarea
-                        id="activityDescription"
-                        rows="4"
-                    ></textarea>
+			</form>
 
-                </div>
+		</section>
 
 
-                <!-- Button -->
+		<!-- ========================= -->
+		<!-- Activity List -->
+		<!-- ========================= -->
 
-                <button
-                    type="submit"
-                    class="add-activity-button"
-                >
-                    Add Activity
-                </button>
+		<section class="activity-list-section">
 
-            </form>
+			<div class="activity-list-header">
 
-        </section>
+				<h2>Activity List</h2>
 
+				<select id="filterPlanet" class="planet-filter">
 
-        <!-- ========================= -->
-        <!-- Activity List -->
-        <!-- ========================= -->
+					<option value="">All Planets</option>
 
-        <section class="activity-list-section">
+					<option value="SATURN">Saturn</option>
 
-            <div class="activity-list-header">
+					<option value="JUPITER">Jupiter</option>
 
-                <h2>
-                    Activity List
-                </h2>
+					<option value="MARS">Mars</option>
 
-                <select
-                    id="filterPlanet"
-                    class="planet-filter"
-                >
+					<option value="SUN">Sun</option>
 
-                    <option value="">
-                        All Planets
-                    </option>
+					<option value="VENUS">Venus</option>
 
-                    <option value="SATURN">
-                        Saturn
-                    </option>
+					<option value="MERCURY">Mercury</option>
 
-                    <option value="JUPITER">
-                        Jupiter
-                    </option>
+					<option value="MOON">Moon</option>
 
-                    <option value="MARS">
-                        Mars
-                    </option>
+				</select>
 
-                    <option value="SUN">
-                        Sun
-                    </option>
+			</div>
 
-                    <option value="VENUS">
-                        Venus
-                    </option>
 
-                    <option value="MERCURY">
-                        Mercury
-                    </option>
+			<!-- ========================= -->
+			<!-- Planet Cards -->
+			<!-- ========================= -->
 
-                    <option value="MOON">
-                        Moon
-                    </option>
+			<div id="activityList" class="planet-list"></div>
 
-                </select>
+		</section>
 
-            </div>
+	</main>
 
+	<!-- ========================= -->
+	<!-- Edit Activity Modal -->
+	<!-- ========================= -->
 
-            <!-- ========================= -->
-            <!-- Planet Cards -->
-            <!-- ========================= -->
+	<div id="editModal" class="modal">
 
-            <div
-                id="activityList"
-                class="planet-list"
-            ></div>
+		<div class="modal-content">
 
-        </section>
+			<div class="modal-header">
 
-    </main>
+				<h2>Edit Activity</h2>
 
+				<button type="button" id="closeEditModal" class="modal-close">
+					×</button>
 
-    <script src="/js/activities.js"></script>
+			</div>
+
+
+			<form id="editActivityForm">
+
+				<!-- Activity ID -->
+
+				<input type="hidden" id="editActivityId">
+
+
+				<!-- Planet -->
+
+				<div class="form-group">
+
+					<label for="editPlanet"> Planet </label> <select id="editPlanet"
+						required>
+
+						<option value="SATURN">Saturn</option>
+
+						<option value="JUPITER">Jupiter</option>
+
+						<option value="MARS">Mars</option>
+
+						<option value="SUN">Sun</option>
+
+						<option value="VENUS">Venus</option>
+
+						<option value="MERCURY">Mercury</option>
+
+						<option value="MOON">Moon</option>
+
+					</select>
+
+				</div>
+
+
+				<!-- Activity -->
+
+				<div class="form-group">
+
+					<label for="editActivityName"> Activity </label> <input type="text"
+						id="editActivityName" required>
+
+				</div>
+
+
+				<!-- Description -->
+
+				<div class="form-group">
+
+					<label for="editActivityDescription"> Description </label>
+
+					<textarea id="editActivityDescription" rows="4"></textarea>
+
+				</div>
+
+
+				<!-- Buttons -->
+
+				<div class="modal-actions">
+
+					<button type="button" id="cancelEdit">
+						Cancel</button>
+
+					<button type="submit">Save</button>
+
+				</div>
+
+			</form>
+
+		</div>
+
+	</div>
+
+
+	<script src="/js/activities.js"></script>
 
 </body>
 
