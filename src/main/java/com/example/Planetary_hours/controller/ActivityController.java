@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.Planetary_hours.dto.ActivityResponse;
 import com.example.Planetary_hours.model.Activity;
 import com.example.Planetary_hours.model.Planet;
 import com.example.Planetary_hours.service.ActivityService;
@@ -29,10 +30,18 @@ public class ActivityController {
     // ========================================
 
     @GetMapping
-    public ResponseEntity<List<Activity>> findAll() {
+    public ResponseEntity<List<ActivityResponse>>
+            findAll() {
+
+        List<ActivityResponse> response =
+                activityService
+                        .findAll()
+                        .stream()
+                        .map(ActivityResponse::from)
+                        .toList();
 
         return ResponseEntity.ok(
-                activityService.findAll()
+                response
         );
     }
 
@@ -59,8 +68,9 @@ public class ActivityController {
     // ========================================
 
     @GetMapping("/{id}")
-    public ResponseEntity<Activity> findById(
-            @PathVariable Long id) {
+    public ResponseEntity<ActivityResponse>
+            findById(
+                    @PathVariable Long id) {
 
         Activity activity =
                 activityService.findById(id);
@@ -73,7 +83,7 @@ public class ActivityController {
         }
 
         return ResponseEntity.ok(
-                activity
+                ActivityResponse.from(activity)
         );
     }
 
@@ -83,8 +93,9 @@ public class ActivityController {
     // ========================================
 
     @PostMapping
-    public ResponseEntity<Activity> create(
-            @RequestBody Activity activity) {
+    public ResponseEntity<ActivityResponse>
+            create(
+                    @RequestBody Activity activity) {
 
         Activity saved =
                 activityService.create(
@@ -92,7 +103,7 @@ public class ActivityController {
                 );
 
         return ResponseEntity.ok(
-                saved
+                ActivityResponse.from(saved)
         );
     }
 
