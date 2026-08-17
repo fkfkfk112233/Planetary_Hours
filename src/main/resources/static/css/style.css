@@ -108,9 +108,18 @@ button {
 /* Planetary Hours */
 /* ========================= */
 .hours-container {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 15px;
+    display: none;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-top: 15px;
+}
+
+.hours-container.open {
+    display: grid;
 }
 
 .hour-card {
@@ -219,6 +228,41 @@ section h2 {
 
 .activities-loading, .activities-empty, .activities-error {
 	color: #777;
+}
+
+/* ========================= */
+/* Day / Night Toggle */
+/* ========================= */
+
+.hours-section {
+    margin-top: 35px;
+}
+
+.hours-toggle {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 20px;
+
+    background: white;
+
+    border-radius: 10px;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    text-align: left;
+}
+
+.hours-toggle:hover {
+    background: #eeeeee;
+}
+
+.toggle-icon {
+    font-size: 14px;
 }
 
 /* ========================= */
